@@ -1,0 +1,28 @@
+{{- if .Values.mongodb.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-mongodb
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}mongodb
+  template:
+    metadata:
+      labels: 
+        app: {{ .Release.Name }}mongodb
+    spec:
+      containers:
+      - image: {{ .Values.mongodbImage}}
+        name: myapp-mongodb
+        ports:
+        - containerPort: {{ .Values.mongodb.port}}
+          name: mongodb
+        volumeMounts:
+        - name: mongodb-persistent-storage
+          mountPath: /data/db
+      volumes:
+      - name: mongodb-persistent-storage
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}pvclaim
+{{- end }}

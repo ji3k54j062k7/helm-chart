@@ -1,0 +1,74 @@
+{{- if .Values.upf.enabled }}
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-upf-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}upf
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}upf
+    spec:
+      containers:      
+      - name: myapp-container
+        image: {{ .Values.userPlaneImage}}
+        securityContext:
+          privileged: true
+        command: ["/bin/sh"]
+        # args: ["-c", "ip addr add 60.60.0.100 dev lo && ip link set dev lo up && ./bin/free5gc-upfd"]
+        args: ["-c", "sleep 10s && ./bin/free5gc-upfd"]
+        volumeMounts:
+        - mountPath: /dev/net/tun
+          name: tun-volume
+        - name: upfcfg
+          mountPath: /go/src/free5gc/src/upf/build/config/upfcfg.yaml
+          subPath: upfcfg.yaml
+        - name: free5gc
+          mountPath: /go/src/free5gc/config/free5GC.conf
+          subPath: free5GC.conf
+      initContainers:
+      - name: init-network-client
+        image: {{ .Values.generic.networkImage }}
+        command: ["/go/bin/client"]
+        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.upf.interface }}", "-i={{ .Values.upf.addresses }}"]
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_UUID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.uid
+        volumeMounts:
+        - mountPath: /tmp/
+          name: grpc-sock
+      volumes:
+      - name: grpc-sock
+        hostPath:
+          path: /tmp/vortex/
+      - name: tun-volume
+        hostPath:
+          path: /dev/net/tun
+      - name: upfcfg
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: upfcfg.yaml
+            path: upfcfg.yaml
+      - name: free5gc
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: free5GC.conf
+            path: free5GC.conf
+            
+{{- end }}

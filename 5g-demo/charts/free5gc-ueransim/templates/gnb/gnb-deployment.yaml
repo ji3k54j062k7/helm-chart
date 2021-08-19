@@ -1,0 +1,65 @@
+{{- if .Values.gnb.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ueransim-gnb-deployment
+  labels:
+    app: ueransim-gnb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ueransim-gnb
+  template:
+    metadata:
+      labels:
+        app: ueransim-gnb
+    spec:
+      containers:
+      - name: ueransim-gnb
+        image: {{ .Values.ueransimImage }}
+        securityContext:
+          privileged: true
+        command: ["/bin/bash", "-c"]
+        args: ["./build/nr-gnb -c ./config/free5gc-gnb.yaml"]
+        volumeMounts:
+        - mountPath: /dev/net/tun
+          name: tun-volume
+        - name: gnb-conf
+          mountPath: /UERANSIM/config/free5gc-gnb.yaml
+          subPath: free5gc-gnb.yaml
+      initContainers:
+      - name: init-network-client
+        image: {{ .Values.generic.networkImage }}
+        command: ["/go/bin/client"]
+        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.gnb.interface }}", "-i={{ .Values.gnb.addresses }}", "-g={{ .Values.generic.gateway }}"]
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_UUID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.uid
+        volumeMounts:
+        - mountPath: /tmp/
+          name: grpc-sock
+      volumes:
+      - name: grpc-sock
+        hostPath:
+          path: /tmp/vortex/
+      - name: tun-volume
+        hostPath:
+          path: /dev/net/tun
+      - name: gnb-conf
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: free5gc-gnb.yaml
+            path: free5gc-gnb.yaml
+{{- end }}

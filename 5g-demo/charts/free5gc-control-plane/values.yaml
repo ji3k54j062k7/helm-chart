@@ -1,0 +1,87 @@
+open5gcImage: free5gmano/open5gs:v2.1.7
+mongodbImage: free5gmano/nextepc-mongodb
+
+generic:
+  interface: br1
+  networkImage: sdnvortex/network-controller:v0.4.9
+  gateway: 192.168.3.254
+mongodb:
+  enabled: true
+  port: 27017
+amf:
+  interface: eth1
+  addresses: 192.168.2.7/23
+  ip: 192.168.2.7
+  enabled: true
+  port: 7777
+ausf:
+  interface: eth1
+  addresses: 192.168.2.13/23
+  ip: 192.168.2.13
+  enabled: true
+hss:
+  interface: eth1
+  addresses: 192.168.2.10/23
+  ip: 192.168.2.10
+  enabled: true
+mme:
+  interface: eth1
+  addresses: 192.168.2.4/23
+  ip: 192.168.2.4
+  enabled: true
+nrf:
+  interface: eth1
+  addresses: 192.168.2.12/23
+  ip: 192.168.2.12
+  enabled: true
+pcf:
+  interface: eth1
+  addresses: 192.168.2.15/23
+  ip: 192.168.2.15
+  enabled: true
+pcrf:
+  interface: eth1
+  addresses: 192.168.2.11/23
+  ip: 192.168.2.11
+  enabled: true
+sgwc:
+  interface: eth1
+  addresses: 192.168.2.5/23
+  ip: 192.168.2.5
+  enabled: true
+sgwu:
+  interface: eth1
+  addresses: 192.168.2.8/23
+  ip: 192.168.2.8
+  enabled: true
+smf:
+  interface: eth1
+  addresses: 192.168.2.6/23
+  ip: 192.168.2.6
+  upfIP: 192.168.2.9
+  enabled: true
+udm:
+  interface: eth1
+  addresses: 192.168.2.14/23
+  ip: 192.168.2.14
+  enabled: true
+udr:
+  interface: eth1
+  addresses: 192.168.2.16/23
+  ip: 192.168.2.16
+  enabled: true
+webui:
+  interface: eth1
+  addresses: 192.168.2.162/23
+  ip: 192.168.2.162
+  enabled: true
+
+webui:
+  image: free5gmano/open5gs-webui:v2.1.7
+  enabled: true
+  ports:
+    webuiService:
+      name: webui
+      protocol: TCP
+      port: 3000
+      nodePort: 31111

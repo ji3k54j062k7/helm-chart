@@ -1,0 +1,20 @@
+ueransimImage: free5gmano/ueransim:v3.1.4
+mongodbImage: free5gmano/nextepc-mongodb
+
+generic:
+  interface: br1
+  networkImage: sdnvortex/network-controller:v0.4.9
+  gateway: 192.168.3.254
+
+gnb:
+  interface: eth1
+  addresses: 192.168.2.18/23
+  ip: 192.168.2.18
+  enabled: true
+  amfIP: 192.168.2.162
+  amfPort: 38412
+ue:
+  interface: eth1
+  addresses: 192.168.2.19/23
+  ip: 192.168.2.19
+  enabled: true

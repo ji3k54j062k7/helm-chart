@@ -1,0 +1,24 @@
+controlPlaneImage: free5gmano/free5gc-control-plane:stage3.0.4
+userPlaneImage: free5gmano/free5gc-user-plane:stage3.0.4  
+nrfUri: http://{{ .nrf.ip}}:{{ .nrf.ports.sbi.port}}
+generic:
+  interface: br1
+  networkImage: sdnvortex/network-controller:v0.4.9
+upf:
+  enabled: true
+  interface: eth1
+  addresses: 192.168.2.160/23
+  ip: 192.168.2.160
+  ports:
+    sbi:
+      name: sbi
+      protocol: TCP
+      port: 29518
+    gtp:
+      name: gtp
+      protocol: UDP
+      port: 2152 
+    pfcp:
+      name: pfcp
+      protocol: UDP
+      port: 8805 
