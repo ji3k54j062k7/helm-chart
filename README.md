@@ -27,7 +27,7 @@ myrepo/free5gc-user-plane         0.1.0           v3.0.4          A Helm chart f
 
 4、安装chart包
 ```
-# helm install xxx myrepo/test
+# helm install xxx myrepo/free5gc-control-plane
 ```
 
 xxx为relaese名字
