@@ -1,10 +1,10 @@
 # helm-chart
 
-## helm的chart仓库地址为：https://ji3k54j062k7.github.io/helm-chart
+## helm的chart倉庫地址：https://ji3k54j062k7.github.io/helm-chart
 
-## 本Chart仓库的使用方法
+## 本Chart倉庫的使用方法
 
-1、添加chart仓库
+1、添加chart倉庫
 ```
 # helm repo add myrepo https://ji3k54j062k7.github.io/helm-chart
 ```
@@ -16,7 +16,7 @@ NAME  	URL
 myrepo	https://ji3k54j062k7.github.io/helm-chart
 ```
 
-3、搜索chart包
+3、找chart
 ```
 # helm search repo
 NAME                              	CHART VERSION	APP VERSION	DESCRIPTION                                   
@@ -25,9 +25,9 @@ myrepo/free5gc-ueransim           0.1.0           v2.1.7          A Helm chart f
 myrepo/free5gc-user-plane         0.1.0           v3.0.4          A Helm chart for Kubernetes
 ```
 
-4、安装chart包
+4、安装chart
 ```
 # helm install xxx myrepo/free5gc-control-plane
 ```
 
-xxx为relaese名字
+xxx為relaese名字
