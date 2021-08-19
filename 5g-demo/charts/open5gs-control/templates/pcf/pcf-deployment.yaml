@@ -1,0 +1,57 @@
+{{- if .Values.pcf.enabled }}
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-pcf-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-pcf
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-pcf
+    spec:
+      containers:      
+      - name: myapp-container
+        image: {{ .Values.open5gcImage }}
+        command: ["/bin/sh"]
+        args: ["-c", "./bin/open5gs-pcfd"]
+        volumeMounts:
+        - name: open5gs-pcfcfg
+          mountPath: /open5gs/install/etc/open5gs/pcf.yaml
+          subPath: pcf.yaml
+      initContainers:
+      - name: init-network-client
+        image: {{ .Values.generic.networkImage }}
+        command: ["/go/bin/client"]
+        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.pcf.interface }}", "-i={{ .Values.pcf.addresses }}", "-g={{ .Values.generic.gateway }}"]
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_UUID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.uid
+        volumeMounts:
+        - mountPath: /tmp/
+          name: grpc-sock
+      volumes:
+      - name: grpc-sock
+        hostPath:
+          path: /tmp/vortex/
+      - name: open5gs-pcfcfg
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: pcf.yaml
+            path: pcf.yaml
+
+{{- end }}

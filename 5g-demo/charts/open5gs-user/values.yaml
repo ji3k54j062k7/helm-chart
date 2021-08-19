@@ -1,0 +1,11 @@
+open5gcImage: free5gmano/open5gs:v2.1.7
+mongodbImage: free5gmano/nextepc-mongodb
+
+generic:
+  interface: br1
+  networkImage: sdnvortex/network-controller:v0.4.9
+upf:
+  interface: eth1
+  addresses: 192.168.2.9/23
+  ip: 192.168.2.9
+  enabled: true
