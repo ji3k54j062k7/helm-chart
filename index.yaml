@@ -3,9 +3,9 @@ entries:
   free5gc-control-plane:
   - apiVersion: v2
     appVersion: v3.0.4
-    created: "2021-08-19T07:23:08.134831148Z"
+    created: "2021-08-21T07:33:14.806789736Z"
     description: A Helm chart for Kubernetes
-    digest: ac4f7291c23c10688be83f2d9eaa70f32c8a9e1dcdf45edc607faf0d5af5863b
+    digest: c02ab8ad914dbc639be5666b03f9b901751340b16932cc42eaf941521d8012f1
     keywords:
     - open5gs-control
     name: free5gc-control-plane
@@ -16,9 +16,9 @@ entries:
   free5gc-ueransim:
   - apiVersion: v2
     appVersion: v2.1.7
-    created: "2021-08-19T07:23:08.135445662Z"
+    created: "2021-08-21T07:33:14.807189906Z"
     description: A Helm chart for Kubernetes use ueransim test free5gc
-    digest: 88b2ad0d899822e802a4f69d430e7e42419794efb6341a09cd3d642468784e9c
+    digest: f8b3224b25c471211a28555effc67c8947c12fefe9443eb53ee34426a7ce28bc
     keywords:
     - free5gc-ueransim
     name: free5gc-ueransim
@@ -26,12 +26,25 @@ entries:
     urls:
     - https://ji3k54j062k7.github.io/helm-chart/repo/free5gc-ueransim-0.1.0.tgz
     version: 0.1.0
+  free5gc-ueransim-demo:
+  - apiVersion: v2
+    appVersion: v3.1.4
+    created: "2021-08-21T07:33:14.8076068Z"
+    description: A Helm chart for Kubernetes
+    digest: a5014da24b061557be256bfbfcccfa6c4a9f73264a88a62c72b09e56fefef4c7
+    keywords:
+    - open5gs-ueransim
+    name: free5gc-ueransim-demo
+    type: application
+    urls:
+    - https://ji3k54j062k7.github.io/helm-chart/repo/free5gc-ueransim-demo-0.1.0.tgz
+    version: 0.1.0
   free5gc-user-plane:
   - apiVersion: v2
     appVersion: v3.0.4
-    created: "2021-08-19T07:23:08.136053899Z"
+    created: "2021-08-21T07:33:14.808009489Z"
     description: A Helm chart for Kubernetes
-    digest: c9efbc1bc2e32f30dbcadfb65c41caf348a5058a6d54610c4b8e0575f1db5f05
+    digest: 05946312918adffa6c33b59ef404d97949c4213ef34847fa62e67bbb128196a1
     keywords:
     - free5gc-user
     name: free5gc-user-plane
@@ -39,4 +52,30 @@ entries:
     urls:
     - https://ji3k54j062k7.github.io/helm-chart/repo/free5gc-user-plane-0.1.0.tgz
     version: 0.1.0
-generated: "2021-08-19T07:23:08.118177637Z"
+  open5gs-control-plane:
+  - apiVersion: v2
+    appVersion: v2.1.7
+    created: "2021-08-21T07:33:14.808994898Z"
+    description: A Helm chart for Kubernetes
+    digest: 1e088e977785a42799a2d6b916185ec6c897c478aef8f1264016a75de8f77862
+    keywords:
+    - open5gs-control
+    name: open5gs-control-plane
+    type: application
+    urls:
+    - https://ji3k54j062k7.github.io/helm-chart/repo/open5gs-control-plane-0.1.0.tgz
+    version: 0.1.0
+  open5gs-user-plane:
+  - apiVersion: v2
+    appVersion: v2.1.7
+    created: "2021-08-21T07:33:14.809301998Z"
+    description: A Helm chart for Kubernetes
+    digest: 0060712df68bf966470ceed13f17541e0bec62d147b18f98d97599e6f8206566
+    keywords:
+    - open5gs-user
+    name: open5gs-user-plane
+    type: application
+    urls:
+    - https://ji3k54j062k7.github.io/helm-chart/repo/open5gs-user-plane-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-08-21T07:33:14.805482341Z"
