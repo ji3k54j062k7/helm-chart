@@ -2,7 +2,7 @@ ueransimImage: free5gmano/ueransim:v3.1.4
 mongodbImage: free5gmano/nextepc-mongodb
 
 generic:
-  interface: br1
+  interface: br0
   networkImage: sdnvortex/network-controller:v0.4.9
   gateway: 192.168.3.254
 

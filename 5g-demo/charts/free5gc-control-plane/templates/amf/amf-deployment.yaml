@@ -6,27 +6,30 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-amf
+      app: {{ .Release.Name }}amf
   replicas: 1
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-amf
+        app: {{ .Release.Name }}amf
     spec:
       containers:      
       - name: myapp-container
-        image: {{ .Values.open5gcImage }}
+        image: {{ .Values.controlImage }}
         command: ["/bin/sh"]
-        args: ["-c", "./bin/open5gs-amfd"]
+        args: ["-c", "./bin/amf"]
         volumeMounts:
-        - name: open5gs-amfcfg
-          mountPath: /open5gs/install/etc/open5gs/amf.yaml
-          subPath: amf.yaml
+        - name: amfcfg
+          mountPath: /go/src/free5gc/config/amfcfg.conf
+          subPath: amfcfg.conf
+        - name: free5gc
+          mountPath: /go/src/free5gc/config/free5GC.conf
+          subPath: free5GC.conf
       initContainers:
       - name: init-network-client
         image: {{ .Values.generic.networkImage }}
         command: ["/go/bin/client"]
-        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.amf.interface }}", "-i={{ .Values.amf.addresses }}", "-g={{ .Values.generic.gateway }}"]
+        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.amf.interface }}", "-i={{ .Values.amf.addresses }}"]
         env:
         - name: POD_NAME
           valueFrom:
@@ -47,10 +50,16 @@ spec:
       - name: grpc-sock
         hostPath:
           path: /tmp/vortex/
-      - name: open5gs-amfcfg
+      - name: amfcfg
         configMap:
           name: {{ .Release.Name }}-configmap
           items: 
-          - key: amf.yaml
-            path: amf.yaml
+          - key: amfcfg.conf
+            path: amfcfg.conf
+      - name: free5gc
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: free5GC.conf
+            path: free5GC.conf
 {{- end }}

@@ -6,27 +6,30 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-nrf
+      app: {{ .Release.Name }}nrf
   replicas: 1
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-nrf
+        app: {{ .Release.Name }}nrf
     spec:
       containers:      
       - name: myapp-container
-        image: {{ .Values.open5gcImage }}
+        image: {{ .Values.controlImage }}
         command: ["/bin/sh"]
-        args: ["-c", "./bin/open5gs-nrfd"]
+        args: ["-c", "./bin/nrf"]
         volumeMounts:
-        - name: open5gs-nrfcfg
-          mountPath: /open5gs/install/etc/open5gs/nrf.yaml
-          subPath: nrf.yaml
+        - name: nrfcfg
+          mountPath: /go/src/free5gc/config/nrfcfg.conf
+          subPath: nrfcfg.conf
+        - name: free5gc
+          mountPath: /go/src/free5gc/config/free5GC.conf
+          subPath: free5GC.conf
       initContainers:
       - name: init-network-client
         image: {{ .Values.generic.networkImage }}
         command: ["/go/bin/client"]
-        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.nrf.interface }}", "-i={{ .Values.nrf.addresses }}", "-g={{ .Values.generic.gateway }}"]
+        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.nrf.interface }}", "-i={{ .Values.nrf.addresses }}"]
         env:
         - name: POD_NAME
           valueFrom:
@@ -47,10 +50,18 @@ spec:
       - name: grpc-sock
         hostPath:
           path: /tmp/vortex/
-      - name: open5gs-nrfcfg
+      - name: nrfcfg
         configMap:
           name: {{ .Release.Name }}-configmap
           items: 
-          - key: nrf.yaml
-            path: nrf.yaml
+          - key: nrfcfg.conf
+            path: nrfcfg.conf
+      - name: free5gc
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: free5GC.conf
+            path: free5GC.conf
+      
+
 {{- end }}

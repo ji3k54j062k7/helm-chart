@@ -1,74 +1,54 @@
-open5gcImage: free5gmano/open5gs:v2.1.7
+controlImage: free5gmano/free5gc-control-plane:stage3.0.4
 mongodbImage: free5gmano/nextepc-mongodb
 
 generic:
-  interface: br1
+  interface: br0
   networkImage: sdnvortex/network-controller:v0.4.9
-  gateway: 192.168.3.254
 mongodb:
   enabled: true
   port: 27017
 amf:
   interface: eth1
-  addresses: 192.168.2.7/23
-  ip: 192.168.2.7
+  addresses: 192.168.2.162/23
+  ip: 192.168.2.162
   enabled: true
-  port: 7777
+  port: 29502
 ausf:
   interface: eth1
-  addresses: 192.168.2.13/23
-  ip: 192.168.2.13
-  enabled: true
-hss:
-  interface: eth1
-  addresses: 192.168.2.10/23
-  ip: 192.168.2.10
-  enabled: true
-mme:
-  interface: eth1
-  addresses: 192.168.2.4/23
-  ip: 192.168.2.4
+  addresses: 192.168.2.164/23
+  ip: 192.168.2.164
   enabled: true
 nrf:
   interface: eth1
-  addresses: 192.168.2.12/23
-  ip: 192.168.2.12
+  addresses: 192.168.2.165/23
+  ip: 192.168.2.165
   enabled: true
+  port: 29510
+nssf:
+  interface: eth1
+  addresses: 192.168.2.166/23
+  ip: 192.168.2.166
+  enabled: true 
 pcf:
   interface: eth1
-  addresses: 192.168.2.15/23
-  ip: 192.168.2.15
-  enabled: true
-pcrf:
-  interface: eth1
-  addresses: 192.168.2.11/23
-  ip: 192.168.2.11
-  enabled: true
-sgwc:
-  interface: eth1
-  addresses: 192.168.2.5/23
-  ip: 192.168.2.5
-  enabled: true
-sgwu:
-  interface: eth1
-  addresses: 192.168.2.8/23
-  ip: 192.168.2.8
+  addresses: 192.168.2.169/23
+  ip: 192.168.2.169
   enabled: true
 smf:
   interface: eth1
-  addresses: 192.168.2.6/23
-  ip: 192.168.2.6
-  upfIP: 192.168.2.9
+  addresses: 192.168.2.163/23
+  ip: 192.168.2.163
+  upfIP: 192.168.2.160
   enabled: true
 udm:
   interface: eth1
-  addresses: 192.168.2.14/23
-  ip: 192.168.2.14
+  addresses: 192.168.2.167/23
+  ip: 192.168.2.167
   enabled: true
 udr:
   interface: eth1
-  addresses: 192.168.2.16/23
-  ip: 192.168.2.16
+  addresses: 192.168.2.168/23
+  ip: 192.168.2.168
   enabled: true
 webui:
   interface: eth1
@@ -83,5 +63,5 @@ webui:
     webuiService:
       name: webui
       protocol: TCP
-      port: 3000
+      port: 5000
       nodePort: 31111

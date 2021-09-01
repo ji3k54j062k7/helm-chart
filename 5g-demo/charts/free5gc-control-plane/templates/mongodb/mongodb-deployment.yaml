@@ -13,7 +13,7 @@ spec:
         app: {{ .Release.Name }}mongodb
     spec:
       containers:
-      - image: {{ .Values.mongodbImage}}
+      - image: {{ .Values.mongodbImage }}
         name: myapp-mongodb
         ports:
         - containerPort: {{ .Values.mongodb.port}}

@@ -6,30 +6,33 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-smf
+      app: {{ .Release.Name }}smf
   replicas: 1
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-smf
+        app: {{ .Release.Name }}smf
     spec:
       containers:      
       - name: myapp-container
-        image: {{ .Values.open5gcImage }}
+        image: {{ .Values.controlImage }}
         command: ["/bin/sh"]
-        args: ["-c", "./bin/open5gs-smfd"]
+        args: ["-c", "./bin/smf"]
         volumeMounts:
-        - name: open5gs-smfcfg
-          mountPath: /open5gs/install/etc/open5gs/smf.yaml
-          subPath: smf.yaml
-        - name: open5gs-freediameter-smfcfg
-          mountPath: /open5gs/install/etc/freeDiameter/smf.conf
-          subPath: smf.conf
+        - name: smfcfg
+          mountPath: /go/src/free5gc/config/smfcfg.conf
+          subPath: smfcfg.conf
+        - name: uerouting
+          mountPath: /go/src/free5gc/config/uerouting.yaml
+          subPath: uerouting.yaml
+        - name: free5gc
+          mountPath: /go/src/free5gc/config/free5GC.conf
+          subPath: free5GC.conf
       initContainers:
       - name: init-network-client
         image: {{ .Values.generic.networkImage }}
         command: ["/go/bin/client"]
-        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.smf.interface }}", "-i={{ .Values.smf.addresses }}", "-g={{ .Values.generic.gateway }}"]
+        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.smf.interface }}", "-i={{ .Values.smf.addresses }}"]
         env:
         - name: POD_NAME
           valueFrom:
@@ -50,16 +53,22 @@ spec:
       - name: grpc-sock
         hostPath:
           path: /tmp/vortex/
-      - name: open5gs-smfcfg
+      - name: smfcfg
         configMap:
           name: {{ .Release.Name }}-configmap
           items: 
-          - key: smf.yaml
-            path: smf.yaml
-      - name: open5gs-freediameter-smfcfg
+          - key: smfcfg.conf
+            path: smfcfg.conf
+      - name: uerouting
         configMap:
-          name: {{ .Release.Name }}-freediameter-configmap
+          name: {{ .Release.Name }}-configmap
           items: 
-          - key: smf.conf
-            path: smf.conf
+          - key: uerouting.yaml
+            path: uerouting.yaml
+      - name: free5gc
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: free5GC.conf
+            path: free5GC.conf
 {{- end }}

@@ -1,8 +1,7 @@
 controlPlaneImage: free5gmano/free5gc-control-plane:stage3.0.4
 userPlaneImage: free5gmano/free5gc-user-plane:stage3.0.4  
-nrfUri: http://{{ .nrf.ip}}:{{ .nrf.ports.sbi.port}}
 generic:
-  interface: br1
+  interface: br0
   networkImage: sdnvortex/network-controller:v0.4.9
 upf:
   enabled: true

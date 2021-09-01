@@ -2,7 +2,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ .Release.Name }}-webui-svc
+  name: free5gc-webui-svc
 spec:
   selector:
     app: {{ .Release.Name }}webui

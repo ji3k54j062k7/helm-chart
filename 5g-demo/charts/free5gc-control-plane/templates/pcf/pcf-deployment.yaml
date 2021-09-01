@@ -6,27 +6,30 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-pcf
+      app: {{ .Release.Name }}pcf
   replicas: 1
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-pcf
+        app: {{ .Release.Name }}pcf
     spec:
       containers:      
       - name: myapp-container
-        image: {{ .Values.open5gcImage }}
+        image: {{ .Values.controlImage }}
         command: ["/bin/sh"]
-        args: ["-c", "./bin/open5gs-pcfd"]
+        args: ["-c", "./bin/pcf"]
         volumeMounts:
-        - name: open5gs-pcfcfg
-          mountPath: /open5gs/install/etc/open5gs/pcf.yaml
-          subPath: pcf.yaml
+        - name: pcfcfg
+          mountPath: /go/src/free5gc/config/pcfcfg.conf
+          subPath: pcfcfg.conf
+        - name: free5gc
+          mountPath: /go/src/free5gc/config/free5GC.conf
+          subPath: free5GC.conf
       initContainers:
       - name: init-network-client
         image: {{ .Values.generic.networkImage }}
         command: ["/go/bin/client"]
-        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.pcf.interface }}", "-i={{ .Values.pcf.addresses }}", "-g={{ .Values.generic.gateway }}"]
+        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.pcf.interface }}", "-i={{ .Values.pcf.addresses }}"]
         env:
         - name: POD_NAME
           valueFrom:
@@ -47,11 +50,16 @@ spec:
       - name: grpc-sock
         hostPath:
           path: /tmp/vortex/
-      - name: open5gs-pcfcfg
+      - name: pcfcfg
         configMap:
           name: {{ .Release.Name }}-configmap
           items: 
-          - key: pcf.yaml
-            path: pcf.yaml
-
+          - key: pcfcfg.conf
+            path: pcfcfg.conf
+      - name: free5gc
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: free5GC.conf
+            path: free5GC.conf
 {{- end }}

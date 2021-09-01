@@ -2,31 +2,34 @@
 apiVersion: apps/v1 
 kind: Deployment
 metadata:
-  name: open5gs-udr-deployment
+  name: {{ .Release.Name }}-udr-deployment
 spec:
   selector:
     matchLabels:
-      app: open5gs-udr
+      app: {{ .Release.Name }}udr
   replicas: 1
   template:
     metadata:
       labels:
-        app: open5gs-udr
+        app: {{ .Release.Name }}udr
     spec:
       containers:      
       - name: myapp-container
-        image: {{ .Values.open5gcImage }}
+        image: {{ .Values.controlImage }}
         command: ["/bin/sh"]
-        args: ["-c", "./bin/open5gs-udrd"]
+        args: ["-c", "./bin/udr"]
         volumeMounts:
-        - name: open5gs-udrcfg
-          mountPath: /open5gs/install/etc/open5gs/udr.yaml
-          subPath: udr.yaml
+        - name: udrcfg
+          mountPath: /go/src/free5gc/config/udrcfg.conf
+          subPath: udrcfg.conf
+        - name: free5gc
+          mountPath: /go/src/free5gc/config/free5GC.conf
+          subPath: free5GC.conf
       initContainers:
       - name: init-network-client
         image: {{ .Values.generic.networkImage }}
         command: ["/go/bin/client"]
-        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.udr.interface }}", "-i={{ .Values.udr.addresses }}", "-g={{ .Values.generic.gateway }}"]
+        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.udr.interface }}", "-i={{ .Values.udr.addresses }}"]
         env:
         - name: POD_NAME
           valueFrom:
@@ -47,10 +50,16 @@ spec:
       - name: grpc-sock
         hostPath:
           path: /tmp/vortex/
-      - name: open5gs-udrcfg
+      - name: udrcfg
         configMap:
           name: {{ .Release.Name }}-configmap
           items: 
-          - key: udr.yaml
-            path: udr.yaml
+          - key: udrcfg.conf
+            path: udrcfg.conf
+      - name: free5gc
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: free5GC.conf
+            path: free5GC.conf
 {{- end }}

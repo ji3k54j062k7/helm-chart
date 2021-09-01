@@ -14,11 +14,28 @@ spec:
         app: {{ .Release.Name }}webui
     spec:
       containers:
-      - name: open5gs-webui
+      - name: free5gc-webui
         command: ["/bin/bash", "-c"]
-        args: ["npm run start"]
-        image: free5gmano/open5gs-webui:v2.1.7
-        env:
-        - name: DB_URI
-          value: "mongodb://{{ .Release.Name }}-mongodb-svc/open5gs"
+        args: ["go run webconsole/server.go"]
+        image: {{ .Values.controlImage }}
+        volumeMounts:
+        - name: webuicfg
+          mountPath: /go/src/free5gc/config/webuicfg.conf
+          subPath: webuicfg.conf
+        - name: free5gc
+          mountPath: /go/src/free5gc/config/free5GC.conf
+          subPath: free5GC.conf
+      volumes:
+      - name: webuicfg
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: webuicfg.conf
+            path: webuicfg.conf
+      - name: free5gc
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: free5GC.conf
+            path: free5GC.conf
 {{- end }}
