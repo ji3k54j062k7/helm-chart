@@ -1,0 +1,65 @@
+{{- if .Values.udm.enabled }}
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-udm-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}udm
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}udm
+    spec:
+      containers:      
+      - name: myapp-container
+        image: {{ .Values.controlImage }}
+        command: ["/bin/sh"]
+        args: ["-c", "./bin/udm"]
+        volumeMounts:
+        - name: udmcfg
+          mountPath: /go/src/free5gc/config/udmcfg.conf
+          subPath: udmcfg.conf
+        - name: free5gc
+          mountPath: /go/src/free5gc/config/free5GC.conf
+          subPath: free5GC.conf
+      initContainers:
+      - name: init-network-client
+        image: {{ .Values.generic.networkImage }}
+        command: ["/go/bin/client"]
+        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.udm.interface }}", "-i={{ .Values.udm.addresses }}"]
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_UUID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.uid
+        volumeMounts:
+        - mountPath: /tmp/
+          name: grpc-sock
+      volumes:
+      - name: grpc-sock
+        hostPath:
+          path: /tmp/vortex/
+      - name: udmcfg
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: udmcfg.conf
+            path: udmcfg.conf
+      - name: free5gc
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: free5GC.conf
+            path: free5GC.conf
+{{- end }}

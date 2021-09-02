@@ -1,0 +1,65 @@
+{{- if .Values.pcf.enabled }}
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-pcf-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}pcf
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}pcf
+    spec:
+      containers:      
+      - name: myapp-container
+        image: {{ .Values.controlImage }}
+        command: ["/bin/sh"]
+        args: ["-c", "./bin/pcf"]
+        volumeMounts:
+        - name: pcfcfg
+          mountPath: /go/src/free5gc/config/pcfcfg.conf
+          subPath: pcfcfg.conf
+        - name: free5gc
+          mountPath: /go/src/free5gc/config/free5GC.conf
+          subPath: free5GC.conf
+      initContainers:
+      - name: init-network-client
+        image: {{ .Values.generic.networkImage }}
+        command: ["/go/bin/client"]
+        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.pcf.interface }}", "-i={{ .Values.pcf.addresses }}"]
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_UUID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.uid
+        volumeMounts:
+        - mountPath: /tmp/
+          name: grpc-sock
+      volumes:
+      - name: grpc-sock
+        hostPath:
+          path: /tmp/vortex/
+      - name: pcfcfg
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: pcfcfg.conf
+            path: pcfcfg.conf
+      - name: free5gc
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: free5GC.conf
+            path: free5GC.conf
+{{- end }}

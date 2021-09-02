@@ -89,7 +89,7 @@ data:
         scheme: http
         registerIPv4: {{ .Values.amf.ip }} # IP used to register to NRF
         bindingIPv4: {{ .Values.amf.ip }}  # IP used to bind the service
-        port: {{ .Values.amf.port }}
+        port: 29518
       serviceNameList:
         - namf-comm
         - namf-evts
@@ -142,7 +142,7 @@ data:
         scheme: http
         registerIPv4: {{ .Values.smf.ip }} # IP used to register to NRF
         bindingIPv4: {{ .Values.smf.ip }}  # IP used to bind the service
-        port: {{ .Values.smf.port }}
+        port: {{ .Values.amf.port }}
         tls:
           key: free5gc/support/TLS/smf.key
           pem: free5gc/support/TLS/smf.pem
@@ -167,14 +167,24 @@ data:
         up_nodes:
           gNB1:
             type: AN
-            an_ip: 192.168.2.210
-          UPF:
+            an_ip: 192.168.2.210 # 10.96.100.50
+          BranchingUPF:
             type: UPF
-            node_id: {{ .Values.smf.upfIP }}
+            node_id: {{ .Values.smf.BranchUpfIP }} # free5gc-upf-svc # 10.96.100.10
+          AnchorUPF1:
+            type: UPF
+            node_id: {{ .Values.smf.AnchorUPF1IP }}
+          AnchorUPF2:
+            type: UPF
+            node_id: {{ .Values.smf.AnchorUPF2IP }}
           
         links:
           - A: gNB1
-            B: UPF
+            B: BranchingUPF
+          - A: BranchingUPF
+            B: AnchorUPF1
+          - A: BranchingUPF
+            B: AnchorUPF2
       ue_subnet: 60.60.0.0/16
       dnn:
         internet:
@@ -186,7 +196,7 @@ data:
             ipv4: 8.8.4.4
             ipv6: 2001:4860:4860::8844
       nrfUri: http://{{ .Values.nrf.ip }}:{{ .Values.nrf.port }}
-
+      ulcl: true
 
   ausfcfg.conf: |
     info:
@@ -198,7 +208,7 @@ data:
         scheme: http
         registerIPv4: {{ .Values.ausf.ip }} # IP used to register to NRF
         bindingIPv4: {{ .Values.ausf.ip }}  # IP used to bind the service
-        port: {{ .Values.ausf.port }}
+        port: 29509
       serviceNameList:
         - nausf-auth
       nrfUri: http://{{ .Values.nrf.ip }}:{{ .Values.nrf.port }}
@@ -239,7 +249,7 @@ data:
         scheme: http
         registerIPv4: {{ .Values.nssf.ip }} # IP used to register to NRF
         bindingIPv4: {{ .Values.nssf.ip }}  # IP used to bind the service
-        port: {{ .Values.nssf.port }}
+        port: 29531
       serviceNameList:
         - nnssf-nsselection
         - nnssf-nssaiavailability
@@ -563,7 +573,7 @@ data:
         scheme: http
         registerIPv4: {{ .Values.pcf.ip }} # IP used to register to NRF
         bindingIPv4: {{ .Values.pcf.ip }}  # IP used to bind the service
-        port: {{ .Values.pcf.port }}
+        port: 29507
       timeFormat: 2019-01-02 15:04:05
       defaultBdtRefId: BdtPolicyId-
       nrfUri: http://{{ .Values.nrf.ip }}:{{ .Values.nrf.port }}
@@ -593,7 +603,7 @@ data:
         scheme: http
         registerIPv4: {{ .Values.udm.ip }} # IP used to register to NRF
         bindingIPv4: {{ .Values.udm.ip }}  # IP used to bind the service
-        port: {{ .Values.udm.port }}
+        port: 29503
         tls:
           log: free5gc/udmsslkey.log
           pem: free5gc/support/TLS/udm.pem
@@ -602,7 +612,7 @@ data:
       udrclient:
         scheme: http
         ipv4Addr: {{ .Values.udr.ip }}
-        port: {{ .Values.udr.port }}
+        port: 29504
 
       nrfclient:
         scheme: http
@@ -631,7 +641,7 @@ data:
         scheme: http
         registerIPv4: {{ .Values.udr.ip }} # IP used to register to NRF
         bindingIPv4: {{ .Values.udr.ip }}  # IP used to bind the service
-        port: {{ .Values.udr.port }}
+        port: 29504
       mongodb:
         name: free5gc
         url: mongodb://{{ .Release.Name }}-mongodb-svc:{{ .Values.mongodb.port }}
@@ -643,20 +653,20 @@ data:
       description: Routing information for UE
 
     ueRoutingInfo:
-      - SUPI: imsi-2089300007487
-        AN: {{ .Values.smf.upfIP }}
+      - SUPI: imsi-208930000000003
+        AN: {{ .Values.smf.BranchUpfIP }} # 10.96.100.10
         PathList:
-          - DestinationIP: 60.60.0.100
+          - DestinationIP: 10.20.1.156
             UPF: !!seq
               - BranchingUPF
               - AnchorUPF1
 
-          - DestinationIP: 60.60.0.103
+          - DestinationIP: 10.20.1.157
             UPF: !!seq
               - BranchingUPF
               - AnchorUPF2
 
-      - SUPI: imsi-2089300007486
+      - SUPI: imsi-208930000000004
         AN: 10.200.200.102
         PathList:
           - DestinationIP: 10.0.0.10

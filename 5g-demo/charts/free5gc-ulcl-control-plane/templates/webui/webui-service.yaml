@@ -1,0 +1,14 @@
+{{- if .Values.webui.enabled }}
+kind: Service
+apiVersion: v1
+metadata:
+  name: free5gc-webui-svc
+spec:
+  selector:
+    app: {{ .Release.Name }}webui
+  type: NodePort
+  ports:
+  - protocol: {{ .Values.webui.ports.webuiService.protocol }}
+    port: {{ .Values.webui.ports.webuiService.port }}
+    nodePort: {{ .Values.webui.ports.webuiService.nodePort }}
+{{- end }}

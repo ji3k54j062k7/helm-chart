@@ -1,0 +1,180 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  free5gc.conf: |
+    db_uri: mongodb://{{ .Release.Name }}-mongodb-svc/free5gc
+
+    logger:
+        file: /root/free5gc/install/var/log/free5gc/free5gc.log
+        trace: 
+            app: 1
+            s1ap: 1
+            nas: 1
+            diameter: 1
+            gtp: 1
+            pfcp: 1
+            sbi: 1
+
+    # 
+    # parameter:
+    #
+    #  o Number of output streams per SCTP associations.
+    #      sctp_streams: 30
+    #
+    #  o Disable use of IPv4 addresses (only IPv6)
+    #      no_ipv4: true
+    #
+    #  o Disable use of IPv6 addresses (only IPv4)
+    #      no_ipv6: true
+    #
+    #  o Prefer IPv4 instead of IPv6 for estabishing new GTP connections.
+    #      prefer_ipv4: true
+    #
+    #  o Enable Multicast traffic to the UE
+    #      multicast: true
+    #
+    #  o Disable Stateless Address Autoconfiguration for IPv6
+    #      no_slaac: true
+    #
+    #
+    parameter:
+        no_ipv6: true
+
+    amf:
+        freeDiameter: amf.conf
+
+        s1ap:
+          addr: {{ .Values.amf.ip }}
+
+        gummei: 
+          plmn_id:
+            mcc: 460
+            mnc: 99
+          mme_gid: 1
+          mme_code: 1
+
+        tai:
+          plmn_id:
+            mcc: 460
+            mnc: 99
+          tac: 1
+
+        security:
+            integrity_order : [ EIA1, EIA2, EIA0 ]
+            ciphering_order : [ EEA0, EEA1, EEA2 ]
+
+  
+        network_name:
+            full: free5GC
+
+    hss:
+        freeDiameter: hss.conf
+
+    pcrf:
+        freeDiameter: pcrf.conf
+
+    smf:
+        freeDiameter: smf.conf
+
+        pfcp:
+          - addr: {{ .Values.smf.ip }}
+
+        upf:
+          - addr: {{ .Values.upf.ip }}
+
+        http:
+          addr: {{ .Values.smf.ip }}
+          port: 8080
+
+    #
+    #  <UE Pool>
+    #
+    #  o IPv4 Pool
+    #    $ sudo ip addr add 45.45.0.1/16 dev uptun
+    #
+    #    ue_pool:
+    #      addr: 45.45.0.1/16
+    #
+    #  o IPv4/IPv6 Pool
+    #    $ sudo ip addr add 45.45.0.1/16 dev uptun
+    #    $ sudo ip addr add cafe:1::1/64 dev uptun
+    #
+    #    ue_pool:
+    #      - addr: 45.45.0.1/16
+    #      - addr: cafe:1::1/64
+    #
+    #
+    #  o Specific APN(e.g 'volte') uses 45.46.0.1/16, cafe:2::1/64
+    #    All other APNs use 45.45.0.1/16, cafe:1::1/64
+    #    $ sudo ip addr add 45.45.0.1/16 dev uptun
+    #    $ sudo ip addr add 45.46.0.1/16 dev uptun
+    #    $ sudo ip addr add cafe:1::1/64 dev uptun
+    #    $ sudo ip addr add cafe:2::1/64 dev uptun
+    #
+    #    ue_pool:
+    #      - addr: 45.45.0.1/16
+    #      - addr: cafe:1::1/64
+    #      - addr: 45.46.0.1/16
+    #        apn: volte
+    #      - addr: cafe:2::1/64
+    #        apn: volte
+    #
+    #  o Multiple Devices (default: uptun)
+    #    $ sudo ip addr add 45.45.0.1/16 dev uptun
+    #    $ sudo ip addr add cafe:1::1/64 dev uptun2
+    #    $ sudo ip addr add 45.46.0.1/16 dev uptun3
+    #    $ sudo ip addr add cafe:2::1/64 dev uptun3
+    #
+    #    ue_pool:
+    #      - addr: 45.45.0.1/16
+    #      - addr: cafe:1::1/64
+    #        dev: uptun2
+    #      - addr: 45.46.0.1/16
+    #        apn: volte
+    #        dev: uptun3
+    #      - addr: cafe:2::1/64
+    #        apn: volte
+    #        dev: uptun3
+    #
+        ue_pool:
+          - addr: 45.45.0.1/16
+
+    #
+    #  <Domain Name Server>
+    #
+    #  o Primary/Secondary can be configured. Others are ignored.
+    #
+        dns:
+          - 8.8.8.8
+          - 8.8.4.4
+
+    upf:
+        pfcp:
+          addr:
+            - {{ .Values.upf.ip }}
+
+    #
+    #  <GTP-U Server>>
+    #
+    #  o GTP-U Server(127.0.0.3:2152, [::1]:2152)
+    #    gtpu:
+    #      - addr: 127.0.0.3
+    #      - addr: ::1
+    #
+    #  o Same configuration(127.0.0.3:2152, [::1]:2152) as below.
+    #    gtpu:
+    #      name: localhost
+    #
+        gtpu:
+          - addr: {{ .Values.upf.ip }}
+
+        ue_pool:
+          - addr: 45.45.0.1/16
+
+        dns:
+          - 8.8.8.8
+          - 8.8.4.4
+
+

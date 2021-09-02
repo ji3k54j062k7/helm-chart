@@ -1,0 +1,45 @@
+free5gcImage: cewuandy/free5gc-base
+mongodbImage: cewuandy/nextepc-mongodb
+
+generic:
+  interface: br0
+  networkImage: sdnvortex/network-controller:v0.4.9
+mongodb:
+  enabled: true
+  port: 27017
+amf:
+  interface: eth1
+  addresses: 192.168.2.2/24
+  ip: 192.168.2.2
+  enabled: true
+hss:
+  interface: eth1
+  addresses: 192.168.2.3/24
+  ip: 192.168.2.3
+  enabled: true
+  port:
+pcrf:
+  interface: eth1
+  addresses: 192.168.2.6/24
+  ip: 192.168.2.6
+  enabled: true
+smf:
+  interface: eth1
+  addresses: 192.168.2.4/24
+  ip: 192.168.2.4
+  upfIP: 192.168.2.5
+  enabled: true
+upf:
+  interface: eth1
+  addresses: 192.168.2.5/24
+  ip: 192.168.2.5
+  enabled: true
+webui:
+  image: cewuandy/free5gc-webui
+  enabled: true
+  ports:
+    webuiService:
+      name: webui
+      protocol: TCP
+      port: 3000
+      nodePort: 31111

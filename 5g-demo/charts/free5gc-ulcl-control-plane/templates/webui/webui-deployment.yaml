@@ -1,0 +1,41 @@
+{{- if .Values.webui.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-webui-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}webui
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}webui
+    spec:
+      containers:
+      - name: free5gc-webui
+        command: ["/bin/bash", "-c"]
+        args: ["go run webconsole/server.go"]
+        image: {{ .Values.controlImage }}
+        volumeMounts:
+        - name: webuicfg
+          mountPath: /go/src/free5gc/config/webuicfg.conf
+          subPath: webuicfg.conf
+        - name: free5gc
+          mountPath: /go/src/free5gc/config/free5GC.conf
+          subPath: free5GC.conf
+      volumes:
+      - name: webuicfg
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: webuicfg.conf
+            path: webuicfg.conf
+      - name: free5gc
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: free5GC.conf
+            path: free5GC.conf
+{{- end }}

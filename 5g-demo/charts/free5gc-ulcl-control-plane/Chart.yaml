@@ -1,5 +1,5 @@
 apiVersion: v2
-name: free5gc-control-plane
+name: free5gc-ulcl-control-plane
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -23,4 +23,4 @@ version: 0.1.0
 # It is recommended to use it with quotes.
 appVersion: "v3.0.4"
 keywords:
-  - free5gc-control
+  - free5gc-ulcl-control

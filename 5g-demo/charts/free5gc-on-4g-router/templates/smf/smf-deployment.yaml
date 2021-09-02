@@ -1,0 +1,65 @@
+{{- if .Values.smf.enabled }}
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-smf-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}smf
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}smf
+    spec:
+      containers:      
+      - name: myapp-container
+        image: {{ .Values.free5gcImage }}
+        command: ["/bin/sh"]
+        args: ["-c", "sleep 30d && /root/free5gc/free5gc-smfd"]
+        volumeMounts:
+        - name: free5gc-config
+          mountPath: /root/free5gc/install/etc/free5gc/free5gc.conf
+          subPath: free5gc.conf
+        - name: free5gc-freediameter-config
+          mountPath: /root/free5gc/install/etc/free5gc/freeDiameter/smf.conf
+          subPath: smf.conf
+      initContainers:
+      - name: init-network-client
+        image: {{ .Values.generic.networkImage }}
+        command: ["/go/bin/client"]
+        args: ["-s=unix:///tmp/vortex.sock", "-b={{ .Values.generic.interface }}", "-n={{ .Values.smf.interface }}", "-i={{ .Values.smf.addresses }}"]
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_UUID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.uid
+        volumeMounts:
+        - mountPath: /tmp/
+          name: grpc-sock
+      volumes:
+      - name: grpc-sock
+        hostPath:
+          path: /tmp/vortex/
+      - name: free5gc-config
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: free5gc.conf
+            path: free5gc.conf
+      - name: free5gc-freediameter-config
+        configMap:
+          name: {{ .Release.Name }}-freediameter-configmap
+          items:
+          - key: smf.conf
+            path: smf.conf
+{{- end }}

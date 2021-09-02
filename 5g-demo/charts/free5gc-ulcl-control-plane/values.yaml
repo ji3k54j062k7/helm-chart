@@ -12,13 +12,12 @@ amf:
   addresses: 192.168.2.162/23
   ip: 192.168.2.162
   enabled: true
-  port: 29518
+  port: 29502
 ausf:
   interface: eth1
   addresses: 192.168.2.164/23
   ip: 192.168.2.164
   enabled: true
-  port: 29509
 nrf:
   interface: eth1
   addresses: 192.168.2.165/23
@@ -30,32 +29,29 @@ nssf:
   addresses: 192.168.2.166/23
   ip: 192.168.2.166
   enabled: true 
-  port: 29531
 pcf:
   interface: eth1
   addresses: 192.168.2.169/23
   ip: 192.168.2.169
   enabled: true
-  port: 29507
 smf:
   interface: eth1
   addresses: 192.168.2.163/23
   ip: 192.168.2.163
-  upfIP: 192.168.2.160
+  BranchUpfIP: 192.168.2.160
+  AnchorUPF1IP: 192.168.2.170
+  AnchorUPF2IP: 192.168.2.171
   enabled: true
-  port: 29502
 udm:
   interface: eth1
   addresses: 192.168.2.167/23
   ip: 192.168.2.167
   enabled: true
-  port: 29503
 udr:
   interface: eth1
   addresses: 192.168.2.168/23
   ip: 192.168.2.168
   enabled: true
-  port: 29504
 webui:
   interface: eth1
   addresses: 192.168.2.162/23
@@ -63,6 +59,7 @@ webui:
   enabled: true
 
 webui:
+  image: free5gmano/open5gs-webui:v2.1.7
   enabled: true
   ports:
     webuiService:
