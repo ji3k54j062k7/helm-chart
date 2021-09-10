@@ -17,7 +17,7 @@ spec:
       - name: myapp-container
         image: {{ .Values.free5gcImage }}
         command: ["/bin/sh"]
-        args: ["-c", "sleep 30d && /root/free5gc/nextepc-hssd"]
+        args: ["-c", "sleep 10s && /root/free5gc/nextepc-hssd"]
         volumeMounts:
         - name: free5gc-config
           mountPath: /root/free5gc/install/etc/free5gc/free5gc.conf

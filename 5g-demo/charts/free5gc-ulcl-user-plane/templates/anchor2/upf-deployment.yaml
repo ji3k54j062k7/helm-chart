@@ -20,7 +20,7 @@ spec:
           privileged: true
         command: ["/bin/sh"]
         # args: ["-c", "ip addr add 60.60.0.100 dev lo && ip link set dev lo up && ./bin/free5gc-upfd"]
-        args: ["-c", "sleep 10s&& ./bin/free5gc-upfd"]
+        args: ["-c", "sleep 10s && ./bin/free5gc-upfd"]
         volumeMounts:
         - mountPath: /dev/net/tun
           name: tun-volume

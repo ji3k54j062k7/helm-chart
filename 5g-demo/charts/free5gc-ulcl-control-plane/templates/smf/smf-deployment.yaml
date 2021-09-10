@@ -17,7 +17,7 @@ spec:
       - name: myapp-container
         image: {{ .Values.controlImage }}
         command: ["/bin/sh"]
-        args: ["-c", "sleep 30d && ./bin/smf"]
+        args: ["-c", "sleep 10s && ./bin/smf"]
         volumeMounts:
         - name: smfcfg
           mountPath: /go/src/free5gc/config/smfcfg.conf
