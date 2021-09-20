@@ -3,7 +3,7 @@ entries:
   free5gc-control-plane:
   - apiVersion: v2
     appVersion: v3.0.4
-    created: "2021-09-10T03:04:23.061565719Z"
+    created: "2021-09-20T04:08:40.032827091Z"
     description: A Helm chart for Kubernetes
     digest: 85fadcf53dd35019dc056d2948d4f2a4280aa32d7c32b2ac89267a1778600513
     keywords:
@@ -13,23 +13,10 @@ entries:
     urls:
     - https://ji3k54j062k7.github.io/helm-chart/repo/free5gc-control-plane-0.1.0.tgz
     version: 0.1.0
-  free5gc-on-4g-router:
-  - apiVersion: v2
-    appVersion: v1.0.0
-    created: "2021-09-10T03:04:23.062743835Z"
-    description: A Helm chart for Kubernetes
-    digest: a2f5d0ca838e4e11aef03519e79e5d291f459e39357e0e18de8ffa76534a25eb
-    keywords:
-    - free5gc-control
-    name: free5gc-on-4g-router
-    type: application
-    urls:
-    - https://ji3k54j062k7.github.io/helm-chart/repo/free5gc-on-4g-router-0.1.0.tgz
-    version: 0.1.0
   free5gc-ueransim:
   - apiVersion: v2
     appVersion: v3.1.4
-    created: "2021-09-10T03:04:23.063742907Z"
+    created: "2021-09-20T04:08:40.033324528Z"
     description: A Helm chart for Kubernetes use ueransim test free5gc
     digest: ace5f954b4907658cec83d6fb1bea10329eecf93a609d13ae3641f162224a02f
     keywords:
@@ -39,38 +26,12 @@ entries:
     urls:
     - https://ji3k54j062k7.github.io/helm-chart/repo/free5gc-ueransim-0.1.0.tgz
     version: 0.1.0
-  free5gc-ulcl-control-plane:
-  - apiVersion: v2
-    appVersion: v3.0.4
-    created: "2021-09-10T03:04:23.065205517Z"
-    description: A Helm chart for Kubernetes
-    digest: bf3bbda3ababb6d216571205167b3a169e849da86dab23958468fd0e874cd73a
-    keywords:
-    - free5gc-ulcl-control
-    name: free5gc-ulcl-control-plane
-    type: application
-    urls:
-    - https://ji3k54j062k7.github.io/helm-chart/repo/free5gc-ulcl-control-plane-0.1.0.tgz
-    version: 0.1.0
-  free5gc-ulcl-user-plane:
-  - apiVersion: v2
-    appVersion: v3.0.4
-    created: "2021-09-10T03:04:23.06581957Z"
-    description: A Helm chart for Kubernetes
-    digest: f44b7a92ccdb2136d1c87c451a8e7d0e42a15841f6228742c81767048aff4f4a
-    keywords:
-    - free5gc-ulcl-user
-    name: free5gc-ulcl-user-plane
-    type: application
-    urls:
-    - https://ji3k54j062k7.github.io/helm-chart/repo/free5gc-ulcl-user-plane-0.1.0.tgz
-    version: 0.1.0
   free5gc-user-plane:
   - apiVersion: v2
     appVersion: v3.0.4
-    created: "2021-09-10T03:04:23.066798157Z"
+    created: "2021-09-20T04:08:40.033876722Z"
     description: A Helm chart for Kubernetes
-    digest: f5861d1413207ba5de98e9c74476aa50dd365a2d948b361b6d33d85a421dfc95
+    digest: f0bbd55c554a41c600a9f7e8afeae33a98c53a3ff264e51040cc201297eecf6a
     keywords:
     - free5gc-user
     name: free5gc-user-plane
@@ -78,43 +39,4 @@ entries:
     urls:
     - https://ji3k54j062k7.github.io/helm-chart/repo/free5gc-user-plane-0.1.0.tgz
     version: 0.1.0
-  open5gs-control-plane:
-  - apiVersion: v2
-    appVersion: v2.1.7
-    created: "2021-09-10T03:04:23.068643206Z"
-    description: A Helm chart for Kubernetes
-    digest: f2a170cf9a65061fcb3c1b5470c1f87f6daade06f716d8b894b4cfdd040bee60
-    keywords:
-    - open5gs-control
-    name: open5gs-control-plane
-    type: application
-    urls:
-    - https://ji3k54j062k7.github.io/helm-chart/repo/open5gs-control-plane-0.1.0.tgz
-    version: 0.1.0
-  open5gs-ueransim:
-  - apiVersion: v2
-    appVersion: v3.1.4
-    created: "2021-09-10T03:04:23.070123466Z"
-    description: A Helm chart for Kubernetes
-    digest: c87fe8a7987c0fa780bd6bbefc70d16c32ae500a70753d0ea0dbf9f9fb575607
-    keywords:
-    - open5gs-ueransim
-    name: open5gs-ueransim
-    type: application
-    urls:
-    - https://ji3k54j062k7.github.io/helm-chart/repo/open5gs-ueransim-0.1.0.tgz
-    version: 0.1.0
-  open5gs-user-plane:
-  - apiVersion: v2
-    appVersion: v2.1.7
-    created: "2021-09-10T03:04:23.071448167Z"
-    description: A Helm chart for Kubernetes
-    digest: efbc5cdc0ef4500519cd090f226d019d87255d350a887969c37e5117137929c7
-    keywords:
-    - open5gs-user
-    name: open5gs-user-plane
-    type: application
-    urls:
-    - https://ji3k54j062k7.github.io/helm-chart/repo/open5gs-user-plane-0.1.0.tgz
-    version: 0.1.0
-generated: "2021-09-10T03:04:23.049856979Z"
+generated: "2021-09-20T04:08:40.031571845Z"
