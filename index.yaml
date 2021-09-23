@@ -3,7 +3,7 @@ entries:
   free5gc-control-plane:
   - apiVersion: v2
     appVersion: v3.0.4
-    created: "2021-09-21T05:52:49.738065679Z"
+    created: "2021-09-23T07:18:38.294535583Z"
     description: A Helm chart for Kubernetes
     digest: 85fadcf53dd35019dc056d2948d4f2a4280aa32d7c32b2ac89267a1778600513
     keywords:
@@ -16,7 +16,7 @@ entries:
   free5gc-ueransim:
   - apiVersion: v2
     appVersion: v3.1.4
-    created: "2021-09-21T05:52:49.738784752Z"
+    created: "2021-09-23T07:18:38.294972008Z"
     description: A Helm chart for Kubernetes use ueransim test free5gc
     digest: ace5f954b4907658cec83d6fb1bea10329eecf93a609d13ae3641f162224a02f
     keywords:
@@ -29,9 +29,9 @@ entries:
   free5gc-user-plane:
   - apiVersion: v2
     appVersion: v3.0.4
-    created: "2021-09-21T05:52:49.739330608Z"
+    created: "2021-09-23T07:18:38.295460864Z"
     description: A Helm chart for Kubernetes
-    digest: f0bbd55c554a41c600a9f7e8afeae33a98c53a3ff264e51040cc201297eecf6a
+    digest: 6e66093aa60017f0a7350b32aeaedf705c68269e34cf6d6fc7bffc3e5771791c
     keywords:
     - free5gc-user
     name: free5gc-user-plane
@@ -42,7 +42,7 @@ entries:
   second-interface:
   - apiVersion: v2
     appVersion: v1
-    created: "2021-09-21T05:52:49.740098708Z"
+    created: "2021-09-23T07:18:38.296118776Z"
     description: A Helm to set second interface for free5gc on Kubernetes version
       1.16up
     digest: 420add6c206ded97f0db2c7021e2e1aebf65725a0c6aa390dbfd1808b80f27df
@@ -55,7 +55,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: v1beta1
-    created: "2021-09-21T05:52:49.739664107Z"
+    created: "2021-09-23T07:18:38.295765525Z"
     description: A Helm to set second interface for free5gc on Kubernetes pre 1.16
     digest: 9a939044e76a3a3e829ecb27b0f158ff30ec4a6f9b40ccda064eac4e1290cf94
     keywords:
@@ -65,4 +65,4 @@ entries:
     urls:
     - https://ji3k54j062k7.github.io/helm-chart/repo/second-interface-0.1.0.tgz
     version: 0.1.0
-generated: "2021-09-21T05:52:49.735981424Z"
+generated: "2021-09-23T07:18:38.29325637Z"
