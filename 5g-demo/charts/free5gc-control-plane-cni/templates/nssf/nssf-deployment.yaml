@@ -1,0 +1,35 @@
+{{- if .Values.nssf.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-nssf-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}nssf
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}nssf
+    spec:
+      containers:
+      - name: myapp-container
+        image: {{ .Values.controlImage }} 
+        command: ["/bin/sh"]
+        args: ["-c", "sleep 7s && ./bin/nssf"]
+        env:
+        - name: GIN_MODE
+          value: release # debug | release
+        volumeMounts:
+        - name: nssfcfg
+          mountPath: /free5gc/config/nssfcfg.yaml
+          subPath: nssfcfg.yaml
+      volumes:
+      - name: nssfcfg
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items:
+          - key: nssfcfg.yaml
+            path: nssfcfg.yaml
+{{- end }}

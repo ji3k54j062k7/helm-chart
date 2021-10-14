@@ -1,0 +1,17 @@
+{{- if .Values.smf.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-smf-svc
+spec:
+  selector:
+    app: {{ .Release.Name }}smf
+  clusterIP: None # 10.96.100.3
+  ports:
+    - name: {{ .Values.smf.ports.sbi.name }}
+      protocol: {{ .Values.smf.ports.sbi.protocol }}
+      port: {{ .Values.smf.ports.sbi.port }}
+    - name: {{ .Values.smf.ports.pfcp.name }}
+      protocol: {{ .Values.smf.ports.pfcp.protocol }}
+      port: {{ .Values.smf.ports.pfcp.port }}
+{{- end }}

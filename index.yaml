@@ -3,7 +3,7 @@ entries:
   free5gc-control-plane:
   - apiVersion: v2
     appVersion: v3.0.4
-    created: "2021-09-23T07:25:46.26661393Z"
+    created: "2021-10-14T12:44:03.310238368Z"
     description: A Helm chart for Kubernetes
     digest: 85fadcf53dd35019dc056d2948d4f2a4280aa32d7c32b2ac89267a1778600513
     keywords:
@@ -13,10 +13,23 @@ entries:
     urls:
     - https://ji3k54j062k7.github.io/helm-chart/repo/free5gc-control-plane-0.1.0.tgz
     version: 0.1.0
+  free5gc-control-plane-cni:
+  - apiVersion: v2
+    appVersion: v3.0.5
+    created: "2021-10-14T12:44:03.311466229Z"
+    description: Used to connect and deploy free5gc v3.0.5 in kubernetes cni mode
+    digest: 572eb89f94e3fddb55bdf10188baeff70771fccbae8dfb5212bed4ec7b9f463a
+    keywords:
+    - free5gc-control-cni
+    name: free5gc-control-plane-cni
+    type: application
+    urls:
+    - https://ji3k54j062k7.github.io/helm-chart/repo/free5gc-control-plane-cni-0.1.0.tgz
+    version: 0.1.0
   free5gc-ueransim:
   - apiVersion: v2
     appVersion: v3.1.4
-    created: "2021-09-23T07:25:46.267058943Z"
+    created: "2021-10-14T12:44:03.311911506Z"
     description: A Helm chart for Kubernetes use ueransim test free5gc
     digest: ace5f954b4907658cec83d6fb1bea10329eecf93a609d13ae3641f162224a02f
     keywords:
@@ -29,7 +42,7 @@ entries:
   free5gc-user-plane:
   - apiVersion: v2
     appVersion: v3.0.4
-    created: "2021-09-23T07:25:46.267465688Z"
+    created: "2021-10-14T12:44:03.312397776Z"
     description: A Helm chart for Kubernetes
     digest: 783e0a1e90856617bab048ac8a6031276688c2522882f898b19afa52ba5d04e5
     keywords:
@@ -39,10 +52,23 @@ entries:
     urls:
     - https://ji3k54j062k7.github.io/helm-chart/repo/free5gc-user-plane-0.1.0.tgz
     version: 0.1.0
+  free5gc-user-plane-cni:
+  - apiVersion: v2
+    appVersion: v3.0.5
+    created: "2021-10-14T12:44:03.312829166Z"
+    description: Used to connect and deploy free5gc v3.0.5 in kubernetes cni mode
+    digest: 8d44a17e7ee5af4259b28b2432aca4a2f99cfa489c4026f6ec2f2dd19e359ee7
+    keywords:
+    - free5gc-user-cni
+    name: free5gc-user-plane-cni
+    type: application
+    urls:
+    - https://ji3k54j062k7.github.io/helm-chart/repo/free5gc-user-plane-cni-0.1.0.tgz
+    version: 0.1.0
   second-interface:
   - apiVersion: v2
     appVersion: v1
-    created: "2021-09-23T07:25:46.268200079Z"
+    created: "2021-10-14T12:44:03.313551519Z"
     description: A Helm to set second interface for free5gc on Kubernetes version
       1.16up
     digest: 420add6c206ded97f0db2c7021e2e1aebf65725a0c6aa390dbfd1808b80f27df
@@ -55,7 +81,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: v1beta1
-    created: "2021-09-23T07:25:46.267793131Z"
+    created: "2021-10-14T12:44:03.313176125Z"
     description: A Helm to set second interface for free5gc on Kubernetes pre 1.16
     digest: 9a939044e76a3a3e829ecb27b0f158ff30ec4a6f9b40ccda064eac4e1290cf94
     keywords:
@@ -65,4 +91,4 @@ entries:
     urls:
     - https://ji3k54j062k7.github.io/helm-chart/repo/second-interface-0.1.0.tgz
     version: 0.1.0
-generated: "2021-09-23T07:25:46.265345528Z"
+generated: "2021-10-14T12:44:03.3089745Z"

@@ -1,0 +1,17 @@
+{{- if .Values.amf.enabled }}
+apiVersion: v1
+kind: Service
+metadata: 
+  name: {{ .Release.Name }}-amf-svc
+spec:
+  selector:
+    app: {{ .Release.Name }}amf
+  clusterIP: None # 10.96.100.2
+  ports:
+    - name: {{ .Values.amf.ports.sbi.name }}
+      protocol: {{ .Values.amf.ports.sbi.protocol }}
+      port: {{ .Values.amf.ports.sbi.port }}
+    - name: {{ .Values.amf.ports.sctp.name }}
+      protocol: {{ .Values.amf.ports.sctp.protocol }}
+      port: {{ .Values.amf.ports.sctp.port }}
+{{- end }}
