@@ -1,0 +1,35 @@
+{{- if .Values.nrf.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-nrf-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}nrf
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}nrf
+    spec:
+      containers:
+      - name: myapp-container
+        image: {{ .Values.controlImage }} 
+        command: ["/bin/sh"]
+        args: ["-c", "sleep 5s && ./bin/nrf"]
+        env:
+        - name: GIN_MODE
+          value: debug # debug | release
+        volumeMounts:
+        - name: nrfcfg
+          mountPath: /free5gc/config/nrfcfg.yaml
+          subPath: nrfcfg.yaml
+      volumes:
+      - name: nrfcfg
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items:
+          - key: nrfcfg.yaml
+            path: nrfcfg.yaml
+{{- end }}

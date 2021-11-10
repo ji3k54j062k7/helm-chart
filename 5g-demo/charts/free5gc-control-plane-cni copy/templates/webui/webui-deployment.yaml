@@ -1,0 +1,35 @@
+{{- if .Values.webui.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-webui-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}webui
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}webui
+    spec:
+      containers:
+      - name: free5gc-webui
+        command: ["/bin/bash", "-c"]
+        args: ["./webconsole/bin/webconsole"]
+        image: {{ .Values.webImage }}
+        env:
+        - name: GIN_MODE
+          value: debug # debug | release
+        volumeMounts:
+        - name: webuicfg
+          mountPath: /free5gc/config/webuicfg.yaml
+          subPath: webuicfg.yaml
+      volumes:
+      - name: webuicfg
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items:
+          - key: webuicfg.yaml
+            path: webuicfg.yaml
+{{- end }}

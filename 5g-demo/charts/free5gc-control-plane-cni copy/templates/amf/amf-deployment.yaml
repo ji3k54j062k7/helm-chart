@@ -1,0 +1,35 @@
+{{- if .Values.amf.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-amf-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}amf
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}amf
+    spec:
+      containers:
+      - name: myapp-container
+        image: {{ .Values.controlImage }} 
+        command: ["/bin/sh"]
+        args: ["-c", "sleep 7s && ./bin/amf"]
+        env:
+        - name: GIN_MODE
+          value: debug # debug | release
+        volumeMounts:
+        - name: amfcfg
+          mountPath: /free5gc/config/amfcfg.yaml
+          subPath: amfcfg.yaml
+      volumes:
+      - name: amfcfg
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items: 
+          - key: amfcfg.yaml
+            path: amfcfg.yaml
+{{- end }}

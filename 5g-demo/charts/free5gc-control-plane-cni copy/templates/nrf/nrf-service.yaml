@@ -1,0 +1,14 @@
+{{- if .Values.nrf.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-nrf-svc
+spec:
+  selector:
+    app: {{ .Release.Name }}nrf
+  clusterIP: None # 10.96.100.5
+  ports:
+    - name: {{ .Values.nrf.ports.sbi.name }}
+      protocol: {{ .Values.nrf.ports.sbi.protocol }}
+      port: {{ .Values.nrf.ports.sbi.port }}
+{{- end }}

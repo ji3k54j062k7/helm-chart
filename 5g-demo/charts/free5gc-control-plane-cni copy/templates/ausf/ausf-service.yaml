@@ -1,0 +1,14 @@
+{{- if .Values.ausf.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-ausf-svc
+spec:
+  selector:
+    app: {{ .Release.Name }}ausf
+  clusterIP: None # 10.96.100.4
+  ports:
+    - name: {{ .Values.ausf.ports.sbi.name }}
+      protocol: {{ .Values.ausf.ports.sbi.protocol }}
+      port: {{ .Values.ausf.ports.sbi.port }}
+{{- end }}

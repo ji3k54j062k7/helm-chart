@@ -1,0 +1,35 @@
+{{- if .Values.ausf.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-ausf-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}ausf
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}ausf
+    spec:
+      containers:
+      - name: myapp-container
+        image: {{ .Values.controlImage }} 
+        command: ["/bin/sh"]
+        args: ["-c", "sleep 7s && ./bin/ausf"]
+        env:
+        - name: GIN_MODE
+          value: debug # debug | release
+        volumeMounts:
+        - name: ausfcfg
+          mountPath: /free5gc/config/ausfcfg.yaml
+          subPath: ausfcfg.yaml
+      volumes:
+      - name: ausfcfg
+        configMap:
+          name: {{ .Release.Name }}-configmap
+          items:
+          - key: ausfcfg.yaml
+            path: ausfcfg.yaml
+{{- end }}

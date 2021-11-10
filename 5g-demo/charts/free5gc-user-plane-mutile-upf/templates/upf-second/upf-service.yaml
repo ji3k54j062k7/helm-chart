@@ -1,0 +1,20 @@
+{{- if .Values.upf.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: free5gc-upf2-svc
+spec:
+  selector:
+    app: {{ .Release.Name }}upf2
+  clusterIP: None # 10.96.100.10
+  ports:
+    - name: {{ .Values.upf.ports.sbi.name }}
+      port: {{ .Values.upf.ports.sbi.port }}
+      protocol: {{ .Values.upf.ports.sbi.protocol }}
+    - name: {{ .Values.upf.ports.gtp.name }}
+      protocol: {{ .Values.upf.ports.gtp.protocol }}
+      port: {{ .Values.upf.ports.gtp.port }}
+    - name: {{ .Values.upf.ports.pfcp.name }}
+      protocol: {{ .Values.upf.ports.pfcp.protocol }}
+      port: {{ .Values.upf.ports.pfcp.port }}
+{{- end }}
