@@ -1,6 +1,6 @@
 apiVersion: v2
-name: free5gc-user-plane-cni
-description: Used to connect and deploy free5gc v3.0.5 in kubernetes cni mode 
+name: free5gc-user-plane-multi-upf
+description: Used to connect and d  eploy free5gc v3.0.5 in kubernetes cni mode. multi-upf function
 
 # A chart can be either an 'application' or a 'library' chart.
 #
