@@ -1,0 +1,17 @@
+userPlaneImage: free5gmano/free5gc-user-plane:stage3.0.5-amd64
+upf:
+  enabled: true
+  ports:
+    sbi:
+      name: sbi
+      protocol: TCP
+      port: 29518
+    gtp:
+      name: gtp
+      protocol: UDP
+      port: 2152 
+    pfcp:
+      name: pfcp
+      protocol: UDP
+      port: 8805 
+  dnn_rang: 60.62.0.0/16

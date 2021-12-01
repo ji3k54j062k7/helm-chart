@@ -1,0 +1,14 @@
+{{- if .Values.nssf.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-nssf-svc
+spec:
+  selector:
+    app: {{ .Release.Name }}nssf
+  clusterIP: None # 10.96.100.6
+  ports:
+    - name: {{ .Values.nssf.ports.sbi.name }}
+      protocol: {{ .Values.nssf.ports.sbi.protocol }}
+      port: {{ .Values.nssf.ports.sbi.port }}
+{{- end }}

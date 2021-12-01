@@ -1,0 +1,14 @@
+{{- if .Values.pcf.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-pcf-svc
+spec:
+  selector:
+    app: {{ .Release.Name }}pcf
+  clusterIP: None # 10.96.100.9
+  ports:
+    - name: {{ .Values.pcf.ports.sbi.name }}
+      protocol: {{ .Values.pcf.ports.sbi.protocol }}
+      port: {{ .Values.pcf.ports.sbi.port }}
+{{- end }}

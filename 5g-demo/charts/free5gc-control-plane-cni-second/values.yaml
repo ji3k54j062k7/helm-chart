@@ -1,0 +1,78 @@
+controlImage: free5gmano/free5gc-control-plane:stage3.0.5-amd64
+mongodbImage: free5gmano/nextepc-mongodb
+webImage: free5gmano/free5gc-webui:stage3.0.5-amd64
+mongodb:
+  enabled: true
+  port: 27017
+amf:
+  enabled: true
+  ports:
+    sbi:
+      name: sbi
+      protocol: TCP
+      port: 29518
+    sctp:
+      name: sctp
+      protocol: SCTP
+      port: 38412
+ausf:
+  enabled: true
+  ports:
+    sbi:
+      name: sbi
+      protocol: TCP
+      port: 29509
+nrf:
+  enabled: true
+  ports:
+    sbi:
+      name: sbi
+      protocol: TCP
+      port: 29510
+nssf:
+  enabled: true 
+  ports:
+    sbi:
+      name: sbi
+      protocol: TCP
+      port: 29531
+pcf:
+  enabled: true
+  ports:
+    sbi:
+      name: sbi
+      protocol: TCP
+      port: 29507
+smf:
+  enabled: true
+  ports:
+    sbi:
+      name: sbi
+      protocol: TCP
+      port: 29502
+    pfcp:
+      name: pfcp
+      protocol: UDP
+      port: 8805
+udm:
+  enabled: true
+  ports:
+    sbi:
+      name: sbi
+      protocol: TCP
+      port: 29503
+udr:
+  enabled: true
+  ports:
+    sbi:
+      name: sbi
+      protocol: TCP
+      port: 29504
+webui:
+  enabled: true
+  ports:
+    webuiService:
+      name: webui
+      protocol: TCP
+      port: 5000
+      nodePort: 32222

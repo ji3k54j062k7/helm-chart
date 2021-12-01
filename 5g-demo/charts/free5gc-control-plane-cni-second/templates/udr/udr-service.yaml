@@ -1,0 +1,14 @@
+{{- if .Values.udr.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-udr-svc
+spec:
+  selector:
+    app: {{ .Release.Name }}udr
+  clusterIP: None # 10.96.100.8
+  ports:
+    - name: {{ .Values.udr.ports.sbi.name }}
+      protocol: {{ .Values.udr.ports.sbi.protocol }}
+      port: {{ .Values.udr.ports.sbi.port }}
+{{- end }}
